@@ -10,11 +10,15 @@ function Item({portfolio}){
     return(
         <li className="flex flex-row justify-between items-center py-3 border-b" >
             <div>
-               {portfolio.thumbnail ?    <img src={portfolio.thumbnail} alt="image" className="max-w-16 max-h-16" /> : "이미지없음"}
+               {portfolio.thumbnail ?    <img src={portfolio.thumbnail} alt="image" className="max-w-16 max-h-16" /> : "이미지 없음"}
               
             </div>
             <div>
-                {portfolio.subject}
+                <Link href={`/portfolios/${portfolio.id}`}>
+                    <a>
+                        {portfolio.subject}
+                    </a>
+                </Link>
             </div>
             <div>
                 {DateTime.fromSeconds(portfolio.created_at.seconds).toFormat('yyyy-LL-dd')}
