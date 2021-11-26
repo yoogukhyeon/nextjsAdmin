@@ -10,7 +10,7 @@ import Loading from '../views/Loading'
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
 
-export default function baseLayout({ children }) {
+export default function BaseLayout({ children }) {
     const auth = getAuth(firbaseApp)
     const router = useRouter();
     const [loaded , setLoaded] = useState(false);

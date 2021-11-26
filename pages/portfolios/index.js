@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import firebaseApp from "../../net/firebaseApp";
 import {getFirestore , collection , getDocs} from "firebase/firestore/lite"
 import { DateTime } from "luxon";
-
+import {image} from "next/image"
 function Item({portfolio}){
     return(
         <li className="flex flex-row justify-between items-center py-3 border-b" >
@@ -31,15 +31,21 @@ function Item({portfolio}){
 
 export default function PortfolioList(){
     const [portfolios , setPortFolios] = useState([])
-    useEffect( async () => {
-        const firestore = getFirestore(firebaseApp);
-        const portFolios = collection(firestore ,'portfolios')
-        const GetDoc = await getDocs(portFolios);
-        setPortFolios(GetDoc.docs.map( doc => ({
-                id : doc.id,
-                ...doc.data()
-        })).sort(( x , y) => x.created_at.seconds < y.created_at.seconds ? 1 : -1)
+    useEffect( () => {
+        async function fetchData() {
+            const firestore = getFirestore(firebaseApp);
+            const portFolios = collection(firestore ,'portfolios')
+            const GetDoc = await getDocs(portFolios);
+            setPortFolios(GetDoc.docs.map( doc => ({
+                    id : doc.id,
+                    ...doc.data()
+            })).sort(( x , y) => x.created_at.seconds < y.created_at.seconds ? 1 : -1)
         )
+          }
+          fetchData();
+
+
+      
             
     }, [])
     return(
